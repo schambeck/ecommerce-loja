@@ -44,7 +44,36 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
+
+      <plugin>
+      <groupId>io.fabric8</groupId>
+      <artifactId>docker-maven-plugin</artifactId>
+      <configuration>
+        <images>
+          <image>
+            <name>ecommerce/java:${project.artifactId}</name>
+            <alias>ecommerce-loja</alias>
+            <build>
+              <from>openjdk:latest</from>
+              <assembly>
+                <descriptorRef>artifact</descriptorRef>
+              </assembly>
+              <cmd>java -jar target/ecommerce-loja-swarm.jar</cmd>
+            </build>
+          </image>
+        </images>
+      </configuration>
+      <executions>
+        <execution>
+          <id>docker:start</id>
+          <phase>install</phase>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
   </build>
 
   <dependencies>
